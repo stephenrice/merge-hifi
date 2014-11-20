@@ -201,17 +201,20 @@ public class NowPlaying extends Activity implements NavigationDrawerFragment.Nav
         // Set up people
         userLoggedIn = peopleCollection.findByName("Jeff");
 
+        // Default set up.
+        songIndex = 0;
+        currentSong = tempest;
+        playListOwner = sara;
+
         Intent incomingIntent = getIntent();
         if (incomingIntent != null) {
             String songName = incomingIntent.getStringExtra("song");
             String playListOwnerName = incomingIntent.getStringExtra("person");
-            playListOwner = peopleCollection.findByName(playListOwnerName);
-            songIndex = playListOwner.findSongIndexByTitle(songName);
-            currentSong = playListOwner.getPlaylist().get(songIndex);
-        } else {
-            songIndex = 0;
-            currentSong = iWonder;
-            playListOwner = richard;
+            if (songName != null && playListOwnerName != null) {
+                playListOwner = peopleCollection.findByName(playListOwnerName);
+                songIndex = playListOwner.findSongIndexByTitle(songName);
+                currentSong = playListOwner.getPlaylist().get(songIndex);
+            }
         }
 
         // Set the user we are currently listening to.
