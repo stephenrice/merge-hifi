@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -129,6 +130,11 @@ public class MainActivity extends FragmentActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Log.i("MainActivity", "int position: " + Integer.toString(position));
+        if (position == 1){
+            Intent intent = new Intent(this, NowPlaying.class);
+            startActivity(intent);
+        }
         fragmentManager.beginTransaction()
                 .replace(R.id.container, rf)
                 .commit();

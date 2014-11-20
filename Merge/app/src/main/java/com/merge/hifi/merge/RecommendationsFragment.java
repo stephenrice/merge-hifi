@@ -143,22 +143,23 @@ public class RecommendationsFragment extends Fragment {
             case 4: d = getResources().getDrawable(R.drawable.national2_blur); break;
             default: d = getResources().getDrawable(R.drawable.haim_blur); break;
         }
-        v.setBackground(d);
+//        v.setBackground(d);
 //        new backgroundBlurTask().execute();
     }
 
     private Drawable getFriendPic(Song song){
-        if (song.getFriend().equals("Jack"))
-            return getResources().getDrawable(R.drawable.jack);
-        if (song.getFriend().equals("Stephen"))
-            return getResources().getDrawable(R.drawable.stephen);
-        if (song.getFriend().equals("Sasha"))
-            return getResources().getDrawable(R.drawable.jenny);
-        if (song.getFriend().equals("Jenny"))
-            return getResources().getDrawable(R.drawable.jenny);
-        if (song.getFriend().equals("Will"))
-            return getResources().getDrawable(R.drawable.will);
-        return null;
+//        if (song.getFriend().equals("Jack"))
+//            return getResources().getDrawable(R.drawable.jack);
+//        if (song.getFriend().equals("Stephen"))
+//            return getResources().getDrawable(R.drawable.stephen);
+//        if (song.getFriend().equals("Sasha"))
+//            return getResources().getDrawable(R.drawable.jenny);
+//        if (song.getFriend().equals("Jenny"))
+//            return getResources().getDrawable(R.drawable.jenny);
+//        if (song.getFriend().equals("Will"))
+//            return getResources().getDrawable(R.drawable.will);
+//        return null;
+        return getResources().getDrawable(R.drawable.jack);
     }
 
     private void setTextViews(int pos, Song song){
