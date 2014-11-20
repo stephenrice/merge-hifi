@@ -51,11 +51,27 @@ public class PeopleCollection {
         peopleGenerated.add(currentlyListeningTo);
     }
 
+    public Person getPersonFromName(String name) {
+        for (Person p : collection) {
+            if (p.getFullName().equals(name)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public void addRecommendedPerson(Person person) {
+        peopleGenerated.add(person);
+    }
+
     public Person getCurrentlyListeningTo() {
         return currentlyListeningTo;
     }
 
     public Person getRandomPerson() {
+        if (peopleGenerated.size() == 7) {
+            resetRandoms();
+        }
         Integer randomIndex = randomGenerator.nextInt(collection.size());
         Person randomPerson = collection.get(randomIndex);
 

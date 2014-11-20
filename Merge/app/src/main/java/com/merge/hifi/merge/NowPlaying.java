@@ -1,6 +1,7 @@
 package com.merge.hifi.merge;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -10,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -22,12 +24,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import android.support.v7.app.ActionBarActivity;
 //import android.support.v7.widget.Toolbar;
 
 
-public class NowPlaying extends Activity{
+public class NowPlaying extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    /**
+     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     */
+    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     // Sub Views
     private RecommendedUserView user1View;
@@ -75,8 +83,18 @@ public class NowPlaying extends Activity{
         Resources res = getResources();
         assets = getAssets();
         setContentView(R.layout.activity_now_playing);
+
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarLayout);
 //        setSupportActionBar(toolbar);
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer2);
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer2,
+                (DrawerLayout) findViewById(R.id.drawer_layout2));
+        mNavigationDrawerFragment.setIndex(1);
 
         // Set up media player.
         mp = new MediaPlayer();
@@ -119,42 +137,85 @@ public class NowPlaying extends Activity{
         playPauseButton = (ImageButton) findViewById(R.id.playPause);
         favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
 
-        // Set music control background to main color in album art
-        setMusicControlsAndInformationToBackgroundColor();
+
 
 
         // Set up Songs
-        Song iWonder = new Song("I wonder", "Kanye West", "graduation_cover.jpg", "2.mp3");
-        Song backstreet = new Song("Backstreet Freestyle", "Kendrick Lamar", "good_kid_cover.jpg", "1.mp3");
-        Song allOfTheLights = new Song("All of the Lights", "Kanye West", "twisted_fantasy_cover.jpg", "4.mp3");
-        Song richIsGangsta = new Song("Rich is Gangsta", "Rick Ross", "master_mind_cover.jpeg", "3.mp3");
+        Song iWonder = new Song("I wonder", "Kanye West", "albumArt/graduation_cover.jpg", "songs/2.mp3");
+        Song backstreet = new Song("Backstreet Freestyle", "Kendrick Lamar", "albumArt/good_kid_cover.jpg", "songs/1.mp3");
+        Song allOfTheLights = new Song("All of the Lights", "Kanye West", "albumArt/twisted_fantasy_cover.jpg", "songs/4.mp3");
+        Song richIsGangsta = new Song("Rich is Gangsta", "Rick Ross", "albumArt/master_mind_cover.jpeg", "songs/3.mp3");
+
+        // Stephen's Songs (Ann)
+        Song mySong5 = new Song("My Song 5", "Haim", "albumArt/haim.jpg", "songs/mySong5.mp3");
+        Song lungs = new Song("Lungs", "CHVRCHES", "albumArt/chvrches.jpg", "songs/lungs.mp3");
+        Song fakeEmpire = new Song("Fake Empire", "The National", "albumArt/national1.jpg", "songs/fakeEmpire.mp3");
+        Song sadMachine = new Song("Sad Machine", "Porter Robinson", "albumArt/porter.jpg", "songs/sadMachine.mp3");
+        Song lastTime = new Song("This Is The Last Time", "The National", "albumArt/national2.jpg", "songs/thisIsTheLastTime.mp3");
+
+        // Random Songs
+        Song virtue = new Song("Virtue", "Jesse Cook", "albumArt/freefall.jpg", "songs/virtue.mp3");
+        Song waiting = new Song("Waiting", "Jesse Cook", "albumArt/waiting.jpg", "songs/waiting.mp3");
+        Song tempest = new Song("Tempest", "Jesse Cook", "albumArt/tempest.jpg", "songs/tempest.mp3");
 
         // Add songs to people.
         Person richard = new Person("Richard", "people/person2.png");
+        richard.addSong(lungs);
         richard.addSong(iWonder);
-        richard.addSong(backstreet);
+        //richard.addSong(backstreet);
         richard.addSong(allOfTheLights);
-        richard.addSong(richIsGangsta);
+        //richard.addSong(richIsGangsta);
+
+        Person ann = new Person("Ann", "people/person1.png");
+        ann.addSong(mySong5);
+        ann.addSong(lungs);
+        ann.addSong(fakeEmpire);
+
+        Person thomas = new Person("Thomas", "people/person4.png");
+        thomas.addSong(sadMachine);
+        thomas.addSong(lastTime);
+        thomas.addSong(virtue);
+
+
+        Person susan = new Person("Susan", "people/person7.png");
+        susan.addSong(lastTime);
+        susan.addSong(waiting);
+        susan.addSong(allOfTheLights);
+
+        Person sara = new Person("Sara", "people/person5.png");
+        sara.addSong(tempest);
+        sara.addSong(lungs);
+        sara.addSong(fakeEmpire);
+
 
         // Add people to collection.
         peopleCollection = new PeopleCollection();
         peopleCollection.addPerson(richard);
-        peopleCollection.addPerson(new Person("Ann", "people/person1.png"));
+        peopleCollection.addPerson(ann);
         peopleCollection.addPerson(new Person("Jeff", "people/person3.png"));
-        peopleCollection.addPerson(new Person("Thomas", "people/person4.png"));
-        peopleCollection.addPerson(new Person("Sara", "people/person5.png"));
+        peopleCollection.addPerson(thomas);
+        peopleCollection.addPerson(sara);
         peopleCollection.addPerson(new Person("Bill", "people/person6.png"));
-        peopleCollection.addPerson(new Person("Susan", "people/person7.png"));
+        peopleCollection.addPerson(susan);
 
         // Set up people
         userLoggedIn = peopleCollection.findByName("Jeff");
 
-        songIndex = 0;
-        currentSong = iWonder;
-        playListOwner = richard;
+        Intent incomingIntent = getIntent();
+        if (incomingIntent != null) {
+            String songName = incomingIntent.getStringExtra("song");
+            String playListOwnerName = incomingIntent.getStringExtra("person");
+            playListOwner = peopleCollection.findByName(playListOwnerName);
+            songIndex = playListOwner.findSongIndexByTitle(songName);
+            currentSong = playListOwner.getPlaylist().get(songIndex);
+        } else {
+            songIndex = 0;
+            currentSong = iWonder;
+            playListOwner = richard;
+        }
 
         // Set the user we are currently listening to.
-        peopleCollection.setCurrentlyListeningTo(richard);
+        peopleCollection.setCurrentlyListeningTo(playListOwner);
 
         // Set the user who is currently logged in.
         peopleCollection.setCurrentlyLoggedIn(userLoggedIn);
@@ -185,7 +246,13 @@ public class NowPlaying extends Activity{
                         float droppedY = event.getY();
                         dragToShareView.setDisplayAlpha(DragToShareView.defaultAlpha);
                         Log.d("test", event.getClipData().getItemAt(0).getText().toString());
+                        String currName = event.getClipData().getItemAt(0).getText().toString();
                         dragToShareView.invalidate();
+                        // Show toast and animate out
+                        Person sharedPerson = peopleCollection.getPersonFromName(currName);
+                        peopleCollection.addRecommendedPerson(sharedPerson);
+                        showSharedToast(sharedPerson.getFullName());
+                        getNewPersonToShareWith(dragView);
                         return true;
                     case DragEvent.ACTION_DRAG_LOCATION:
                         float currY = event.getY();
@@ -245,6 +312,12 @@ public class NowPlaying extends Activity{
         // Start song on app launch?
         startPlayingSong(currentSong);
         playPauseButton.setImageResource(R.drawable.ic_action_pause);
+
+        backgroundView.setImageDrawable(currentSong.getAlbumArtDrawable(assets));
+        backgroundView.invalidate();
+
+        // Set music control background to main color in album art
+        setMusicControlsAndInformationToBackgroundColor();
     }
 
     private void setUpFavoriteButton() {
@@ -258,6 +331,57 @@ public class NowPlaying extends Activity{
             favDrawable.setColorFilter(0xffffffff, PorterDuff.Mode.MULTIPLY);
             favoriteButton.setImageDrawable(favDrawable);
             favoriteButton.invalidate();
+        }
+    }
+
+    private void showSharedToast(String sharedName) {
+        Toast toast = Toast.makeText(this, "You shared this song with " + sharedName, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    private void getNewPersonToShareWith(View view) {
+        final RecommendedUserView v = (RecommendedUserView)view;
+        Animation slideOut = AnimationUtils.loadAnimation(this, R.anim.user_slide_down);
+        final Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.user_slide_up);
+        slideOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                refreshView(v);
+                v.startAnimation(slideUp);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        v.startAnimation(slideOut);
+        v.invalidate();
+    }
+
+    private void refreshView(RecommendedUserView v) {
+        String name = v.getNameString();
+
+        if (randomPerson1.getFullName().equals(name)) {
+            randomPerson1 = peopleCollection.getRandomPerson();
+            user1View.setProfilePicture(randomPerson1.getProfilePictureDrawable(assets));
+            user1View.setNameString(randomPerson1.getFullName());
+            user1View.invalidate();
+        } else if ((randomPerson2.getFullName().equals(name))) {
+            randomPerson2 = peopleCollection.getRandomPerson();
+            user2View.setProfilePicture(randomPerson2.getProfilePictureDrawable(assets));
+            user2View.setNameString(randomPerson2.getFullName());
+            user2View.invalidate();
+        } else {
+            randomPerson3 = peopleCollection.getRandomPerson();
+            user3View.setProfilePicture(randomPerson3.getProfilePictureDrawable(assets));
+            user3View.setNameString(randomPerson3.getFullName());
+            user3View.invalidate();
         }
     }
 
@@ -319,6 +443,7 @@ public class NowPlaying extends Activity{
     }
 
     private void refreshAllUsersToRecommendTo() {
+        peopleCollection.resetRandoms();
         randomPerson1 = peopleCollection.getRandomPerson();
         user1View.setProfilePicture(randomPerson1.getProfilePictureDrawable(assets));
         user1View.setNameString(randomPerson1.getFullName());
@@ -333,8 +458,6 @@ public class NowPlaying extends Activity{
         user3View.setProfilePicture(randomPerson3.getProfilePictureDrawable(assets));
         user3View.setNameString(randomPerson3.getFullName());
         user3View.invalidate();
-
-        peopleCollection.resetRandoms();
     }
 
     /*
@@ -392,5 +515,13 @@ public class NowPlaying extends Activity{
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        if (position == 0 && NavigationDrawerFragment.isSet){
+            //Intent intent = new Intent(this, MainActivity.class);
+            //startActivity(intent);
+        }
     }
 }

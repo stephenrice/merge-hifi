@@ -2,9 +2,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".NowPlaying">
-    <item
-        android:id="@+id/itemAdd"
-
-        android:title="ADD">
-    </item>
 </menu>

@@ -13,8 +13,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
-import com.merge.hifi.merge.MusicService.MusicBinder;
+//import com.merge.hifi.merge.MusicService.MusicBinder;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private MusicService musicSrv;
+    //private MusicService musicSrv;
     private Intent playIntent;
     private boolean musicBound=false;
     ArrayList<Song> songList;
@@ -69,23 +70,23 @@ public class MainActivity extends FragmentActivity
             Song s;
             switch (i) {
                 case 0: {
-                    s = new Song(1, "My Song 5", "Haim", "Jenny");
+                    s = new Song(1, "My Song 5", "Haim", "Ann");
                     break;
                 }
                 case 1: {
-                    s = new Song(2, "Lungs", "CHVRCHES", "Will");
+                    s = new Song(2, "Lungs", "CHVRCHES", "Richard");
                     break;
                 }
                 case 2: {
-                    s = new Song(3, "Fake Empire", "The National", "Jack");
+                    s = new Song(3, "Fake Empire", "The National", "Sara");
                     break;
                 }
                 case 3: {
-                    s = new Song(4, "Sad Machine", "Porter Robinson", "Sasha");
+                    s = new Song(4, "Sad Machine", "Porter Robinson", "Thomas");
                     break;
                 }
                 case 4: {
-                    s = new Song(5, "This Is The Last Time", "The National", "Stephen");
+                    s = new Song(5, "This Is The Last Time", "The National", "Susan");
                     break;
                 }
                 default: {
@@ -101,11 +102,11 @@ public class MainActivity extends FragmentActivity
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            MusicBinder binder = (MusicBinder)service;
+           // MusicBinder binder = (MusicBinder)service;
             //get service
-            musicSrv = binder.getService();
+            //musicSrv = binder.getService();
             //pass list
-            musicSrv.setList(songList);
+            //musicSrv.setList(songList);
             musicBound = true;
             //musicSrv.playSong();
         }
@@ -119,11 +120,12 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onStart() {
         super.onStart();
+        /*
         if(playIntent==null){
             playIntent = new Intent(this, MusicService.class);
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
-        }
+        }*/
     }
 
     @Override
@@ -132,12 +134,17 @@ public class MainActivity extends FragmentActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         Log.i("MainActivity", "int position: " + Integer.toString(position));
         if (position == 1){
+
             Intent intent = new Intent(this, NowPlaying.class);
             startActivity(intent);
+            mNavigationDrawerFragment.setIndex(1);
+
+        } else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, rf)
+                    .commit();
         }
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, rf)
-                .commit();
+
     }
 
     public void onSectionAttached(int number) {
@@ -181,14 +188,12 @@ public class MainActivity extends FragmentActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
     public void setSong(int id){
-        if (musicSrv != null) musicSrv.playSong();
+        //if (musicSrv != null) musicSrv.playSong();
     }
 
 

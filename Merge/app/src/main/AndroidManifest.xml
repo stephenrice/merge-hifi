@@ -17,9 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".NowPlaying"
-            android:label="NowPlaying"  >
+            android:label="Now Playing"  >
             </activity>
-        <service android:name=".MusicService" />
     </application>
 
 </manifest>

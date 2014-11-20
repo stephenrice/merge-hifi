@@ -1,6 +1,7 @@
 package com.merge.hifi.merge;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -18,11 +19,14 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +44,10 @@ public class RecommendationsFragment extends Fragment {
      * and next wizard steps.
      */
     private ViewPager mPager;
+    private GestureDetector tapGestureDetector;
+
+    private String currentPerson;
+    private String currentSong;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
@@ -55,6 +63,8 @@ public class RecommendationsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         songList = ((MainActivity) getActivity()).getSongList();
+        currentPerson = null;
+        currentSong = null;
     }
 
     @Override
@@ -148,22 +158,28 @@ public class RecommendationsFragment extends Fragment {
     }
 
     private Drawable getFriendPic(Song song){
-//        if (song.getFriend().equals("Jack"))
-//            return getResources().getDrawable(R.drawable.jack);
-//        if (song.getFriend().equals("Stephen"))
-//            return getResources().getDrawable(R.drawable.stephen);
-//        if (song.getFriend().equals("Sasha"))
-//            return getResources().getDrawable(R.drawable.jenny);
-//        if (song.getFriend().equals("Jenny"))
-//            return getResources().getDrawable(R.drawable.jenny);
-//        if (song.getFriend().equals("Will"))
-//            return getResources().getDrawable(R.drawable.will);
-//        return null;
-        return getResources().getDrawable(R.drawable.jack);
+        if (song.getFriend().equals("Ann")) {
+            return getResources().getDrawable(R.drawable.person1);
+        }
+        else if (song.getFriend().equals("Richard")) {
+            return getResources().getDrawable(R.drawable.person2);
+        }
+        else if (song.getFriend().equals("Sara")) {
+            return getResources().getDrawable(R.drawable.person5);
+
+        }
+        else if (song.getFriend().equals("Thomas")) {
+            return getResources().getDrawable(R.drawable.person4);
+        }
+        else {
+            return getResources().getDrawable(R.drawable.person7);
+        }
     }
 
     private void setTextViews(int pos, Song song){
         Log.i("setTestViews", "song: " + song.getTitle());
+        currentPerson = song.getFriend();
+        currentSong = song.getTitle();
         TextView titlev = (TextView) getActivity().findViewById(R.id.recSongTitle);
         TextView artistv = (TextView) getActivity().findViewById(R.id.recArtist);
         TextView friendv = (TextView) getActivity().findViewById(R.id.recFriendName);
@@ -182,7 +198,8 @@ public class RecommendationsFragment extends Fragment {
         if (titlev != null) titlev.setText(song.getTitle());
         if (artistv != null) artistv.setText(song.getArtist());
         if (friendv != null) friendv.setText(song.getFriend());
-        if (friendPic != null) friendPic.setImageDrawable(getFriendPic(song));
+        friendPic.setImageDrawable(getFriendPic(song));
+        friendPic.invalidate();
 
     }
 
@@ -191,6 +208,7 @@ public class RecommendationsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mPager = (ViewPager) view.findViewById(R.id.pager);
+
         SongPagerAdapter spa = new SongPagerAdapter(getChildFragmentManager());
         mPager.setAdapter(spa);
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -209,9 +227,33 @@ public class RecommendationsFragment extends Fragment {
 
             }
         });
+
+        //mPager onClick
+        tapGestureDetector = new GestureDetector(getActivity(), new TapGestureListener());
+        mPager.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                tapGestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
         setTextViews(0, songList.get(0));
 
+    }
+
+    class TapGestureListener extends GestureDetector.SimpleOnGestureListener{
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            Log.d("test","recognized");
+            Intent intent = new Intent(getActivity(), NowPlaying.class);
+            Bundle extras = new Bundle();
+            extras.putString("song", currentSong);
+            extras.putString("person", currentPerson);
+            intent.putExtras(extras);
+            startActivity(intent);
+            return true;
+        }
     }
 
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {

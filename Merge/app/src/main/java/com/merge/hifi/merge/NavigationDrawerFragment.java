@@ -58,6 +58,8 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    public static boolean isSet = false;
+
     public NavigationDrawerFragment() {
     }
 
@@ -107,6 +109,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section3),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        isSet = false;
         return mDrawerListView;
     }
 
@@ -247,12 +250,15 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setIndex(int index) {
+        mCurrentSelectedPosition = index;
+        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        mDrawerListView.invalidate();
+        isSet = true;
     }
 
     /**

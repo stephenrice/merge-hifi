@@ -62,6 +62,16 @@ public class Person {
         return favoritedSongs.contains(song);
     }
 
+    public int findSongIndexByTitle(String title) {
+        for (int i=0; i<playlist.size(); i++) {
+           Song song = playlist.get(i);
+            if (song.getName().equals(title)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
 
 

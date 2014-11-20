@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Stephen on 11/17/14.
- */
+
 public class MusicService extends Service implements
         MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener {
@@ -108,3 +108,4 @@ public class MusicService extends Service implements
         songPosn=songIndex;
     }
 }
+*/

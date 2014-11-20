@@ -13,7 +13,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="450dp" />
+        android:layout_height="300dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,18 +33,12 @@
         android:fontFamily="sans-serif-thin"
         android:textColor="#ffffffff" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:textColor="#ffffffff"
-        android:fontFamily="sans-serif-thin"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:paddingTop="10dp"
         android:id="@+id/imageButton"
         android:src="@drawable/jack"
         android:layout_gravity="center_horizontal"
