@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/myColor"
+    android:baselineAligned="false"
+    android:layout_alignParentBottom="true">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/musicControlsContainerActual"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/myColor"
+
+    android:baselineAligned="false">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dip"
+        android:layout_height="50dip"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/favoriteButton"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_action_favorite"
+            android:background="?android:attr/selectableItemBackground"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dip"
+        android:layout_height="50dp"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/playPause"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_action_play"
+            android:background="?android:attr/selectableItemBackground"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dip"
+        android:layout_height="50dip"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/nextSong"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_action_next"
+            android:background="?android:attr/selectableItemBackground"/>
+    </LinearLayout>
+</LinearLayout>
+</RelativeLayout>

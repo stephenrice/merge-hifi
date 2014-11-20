@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="RecommendedUserView">
+        <attr name="nameString" format="string" />
+        <attr name="textDimension" format="dimension" />
+        <attr name="nameColor" format="color" />
+        <attr name="profilePicture" format="color|reference" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="DragToShareView">
+        <attr name="statusString" format="string" />
+        <attr name="viewDimension" format="dimension" />
+        <attr name="statusStringColor" format="color" />
+        <attr name="viewColor" format="color" />
+    </declare-styleable>
+</resources>
