@@ -52,7 +52,7 @@ public class MainActivity extends FragmentActivity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        mTitle = "Recommended Music";
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
