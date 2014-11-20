@@ -4,11 +4,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * Created by Stephen on 11/16/14.
@@ -41,16 +41,14 @@ public class SongFrag extends Fragment {
         song = getArguments().getParcelable("song");
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.song_fragment_view, container, false);
-        TextView titlev = (TextView) rootView.findViewById(R.id.title);
-        TextView artistv = (TextView) rootView.findViewById(R.id.artist);
-        TextView friendv = (TextView) rootView.findViewById(R.id.rec_friend);
+        Log.i("SongFrag", "pos: " + Integer.toString(number));
         ImageView aav = (ImageView) rootView.findViewById(R.id.songFragAA);
-        titlev.setText(song.getTitle());
-        artistv.setText(song.getArtist());
-        friendv.setText(song.getFriend());
+
         aav.setImageDrawable(getAA());
         return rootView;
     }
+
+
 
 
     @Override

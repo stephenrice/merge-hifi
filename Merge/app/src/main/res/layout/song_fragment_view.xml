@@ -2,8 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/background_dark">
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="900px"
@@ -14,57 +13,4 @@
         android:layout_marginTop="30dp"
         android:background="@android:color/background_dark" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Large Text"
-        android:id="@+id/title"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ffffffff"
-
-        android:fontFamily="sans-serif-light"
-        style="@style/AppTheme"
-        android:autoText="false"
-        android:editable="false"
-        android:textSize="24dp"
-        android:typeface="sans" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Song Fragment"
-        android:id="@+id/artist"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="sans-serif-thin"
-        android:textColor="#ffffffff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recommended by"
-        android:id="@+id/textView3"
-        android:textColor="#ffffffff"
-        android:fontFamily="sans-serif-thin"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@drawable/jack"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="sans-serif-thin"
-        android:layout_marginTop="10dp"
-        android:background="#00ffffff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="FriendName"
-        android:id="@+id/rec_friend"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="sans-serif-thin"
-        android:textColor="#FFFFFF" />
 </LinearLayout>
